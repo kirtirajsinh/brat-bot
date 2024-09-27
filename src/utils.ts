@@ -60,7 +60,7 @@ export const handlePostResponse = async (
 
 export const roastthePost = async (text: string, embedUrl: string) => {
   const response = await fetch(
-    "https://0x768da699e7b40d6fa4660afefa33ef6ccc45749a.us.gaianet.network/v1/chat/completions",
+    "https://0x9b829bf1e151def03532ab355cdfe5cee001f4b0.us.gaianet.network/v1/chat/completions",
     {
       method: "POST",
       headers: {
