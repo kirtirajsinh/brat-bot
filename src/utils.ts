@@ -59,27 +59,32 @@ export const handlePostResponse = async (
 };
 
 export const roastthePost = async (text: string, embedUrl: string) => {
-  const response = await fetch(
-    "https://0x9b829bf1e151def03532ab355cdfe5cee001f4b0.us.gaianet.network/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: [
-          { role: "system", content: `${promptTemplate}` },
-          { role: "user", content: `${text}, ${embedUrl}` },
-        ],
-        completion_tokens: 100,
-      }),
-    }
-  );
-  const data: { choices?: { message: { content: string } }[] } =
-    await response.json();
-  console.log(data?.choices?.[0]?.message.content);
-  return data?.choices?.[0]?.message.content;
+  const url =
+    "https://0x9b829bf1e151def03532ab355cdfe5cee001f4b0.us.gaianet.network/v1/chat/completions";
+  const options = {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: `${promptTemplate}` }, // Use the same system prompt
+        { role: "user", content: `${text}, ${embedUrl}` }, // Pass the user prompt from your post
+      ],
+    }),
+  };
+  try {
+    const response = await fetch(url, options);
+    const data: { choices?: { message: { content: string } }[] } =
+      await response.json();
+
+    console.log(data?.choices?.[0]?.message.content);
+    return data?.choices?.[0]?.message.content;
+  } catch (error) {
+    console.error("Error in roastthePost:", error);
+    return null; // Handle error or return a fallback message
+  }
 };
 
 export const replyWithARoast = async (
