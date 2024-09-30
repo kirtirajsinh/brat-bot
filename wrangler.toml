@@ -21,3 +21,6 @@ signer_uuid = "signer_uuid"
 
 # [ai]
 # binding = "AI"
+
+[observability]
+enabled = true
